@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MyList from "./MyList";
 import SearchBooks from "./SearchBooks";
 import BookInfo from "./BookInfo";
+import "./index.css";
 
 // Dashboard component manages user state and toggles between displaying the book list and search functionality
 const Dashboard = ({ setIsAuthenticated, currentUser }) => {
@@ -99,11 +100,13 @@ const Dashboard = ({ setIsAuthenticated, currentUser }) => {
   return (
     <div className="App">
       {/* Logout button */}
-      <button onClick={handleLogout}>Logout</button>
-      {/* Toggle between "My List" and "Search Books" */}
-      <button onClick={() => setShowMyList(!showMyList)}>
-        {showMyList ? "Search Books" : "My List"}
-      </button>
+      <div className="dashboard">
+        <button onClick={handleLogout}>Logout</button>
+        {/* Toggle between "My List" and "Search Books" */}
+        <button onClick={() => setShowMyList(!showMyList)}>
+          {showMyList ? "Search Books" : "My List"}
+        </button>
+      </div>
       {showMyList ? (
         // Show MyList component if showMyList is true
         <MyList

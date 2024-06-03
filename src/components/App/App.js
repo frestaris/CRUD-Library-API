@@ -1,30 +1,7 @@
-// import React, { useState, useEffect } from "react";
-// import Login from "../Login/Login";
-// import Dashboard from "../Dashboard";
-
-// const App = () => {
-//   const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-//   useEffect(() => {
-//     setIsAuthenticated(JSON.parse(localStorage.getItem("is_authenticated")));
-//   }, []);
-
-//   return (
-//     <>
-//       {isAuthenticated ? (
-//         <Dashboard setIsAuthenticated={setIsAuthenticated}
-//          />
-//       ) : (
-//         <Login onLogin={setIsAuthenticated} />
-//       )}
-//     </>
-//   );
-// };
-
-// export default App;
 import React, { useState } from "react";
 import Login from "../Login/Login";
 import Dashboard from "../Dashboard";
+import "./App.css";
 
 const App = () => {
   // State to track if the user is authenticated

@@ -9,6 +9,11 @@ const Login = ({ onLogin }) => {
 
   // Handle user login
   const handleLogin = () => {
+    if (!email.trim() || !password.trim()) {
+      alert("Please enter both email and password");
+      return;
+    }
+
     // Retrieve all users from local storage
     const users = JSON.parse(localStorage.getItem("users")) || [];
     // Find the user with matching email and password
@@ -25,6 +30,11 @@ const Login = ({ onLogin }) => {
 
   // Handle user registration
   const handleRegister = () => {
+    if (!email.trim() || !password.trim()) {
+      alert("Please enter both email and password");
+      return;
+    }
+
     // Retrieve all users from local storage
     const users = JSON.parse(localStorage.getItem("users")) || [];
     // Check if user with the same email already exists
@@ -45,26 +55,34 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div>
-      <h2>{isRegistering ? "Register" : "Login"}</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={isRegistering ? handleRegister : handleLogin}>
-        {isRegistering ? "Register" : "Login"}
-      </button>
-      <button onClick={() => setIsRegistering(!isRegistering)}>
-        {isRegistering ? "Go to Login" : "Go to Register"}
-      </button>
+    <div className="container">
+      <div className="title">
+        BOOK<span>e</span>PEDIA
+      </div>
+
+      <div className="login">
+        <h2>{isRegistering ? "Register" : "Login"}</h2>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your name..."
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Your password..."
+        />
+        <div className="login-buttons">
+          <button onClick={isRegistering ? handleRegister : handleLogin}>
+            {isRegistering ? "Register" : "Login"}
+          </button>
+          <button onClick={() => setIsRegistering(!isRegistering)}>
+            {isRegistering ? "Go to Login" : "Go to Register"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

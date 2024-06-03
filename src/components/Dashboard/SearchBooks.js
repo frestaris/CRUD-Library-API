@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./SearchBooks.css";
 
 const SearchBooks = ({ onAddBook }) => {
   const [query, setQuery] = useState("");
@@ -34,20 +33,43 @@ const SearchBooks = ({ onAddBook }) => {
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
-
   const totalPages = Math.ceil(results.length / resultsPerPage);
 
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => {
+      const previousPage = Math.max(prevPage - 1, 1);
+      if (previousPage !== prevPage) {
+        window.scrollTo(0, 0);
+      }
+      return previousPage;
+    });
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => {
+      const nextPage = Math.min(prevPage + 1, totalPages);
+      if (nextPage !== prevPage) {
+        window.scrollTo(0, 0);
+      }
+      return nextPage;
+    });
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for books..."
-        />
-        <button type="submit">Search</button>
-      </form>
+    <div className="navbar">
+      <div className="search-bar">
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search for books..."
+          />
+          <button type="submit" className="search-button">
+            Search
+          </button>
+        </form>
+      </div>
 
       {loading && <p className="loading">Loading...</p>}
       {error && <p className="error">Error: {error.message}</p>}
@@ -78,27 +100,27 @@ const SearchBooks = ({ onAddBook }) => {
                   })
                 }
               >
-                Add to List
+                Add
               </button>
             </div>
           </li>
         ))}
       </ul>
 
-      <div className="pagination">
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            {"<"}
+          </button>
+          <span>{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            {">"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
