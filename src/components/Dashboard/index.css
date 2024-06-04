@@ -1,24 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
+body {
+  background-color: #ffca7b;
+}
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
 }
 
 /* LOGIN - REGISTER */
 .title {
+  margin-top: 2rem;
   font-weight: 800;
   font-size: 7rem;
   text-align: center;
+  color: white;
 }
 
 .title span {
-  color: black;
+  color: #9b2948;
   font-style: italic;
   font-size: 6rem;
+  margin: 0 0.5rem;
 }
 
 .login {
@@ -40,7 +44,7 @@ input {
 .login button {
   border: none;
   border-radius: 25px;
-  background-color: #5cb85c;
+  background-color: #3c58fa;
   padding: 10px 20px;
   font-size: 16px;
   margin: 1rem;
@@ -58,21 +62,90 @@ input {
   .title {
     font-size: 5rem;
   }
+  .title span {
+    font-size: 4rem;
+  }
 }
 
 @media (max-width: 480px) {
   .title {
     font-size: 2rem;
   }
+
   .login h2 {
     font-size: 1.5rem;
   }
 }
-/* MAIN PAGE */
-.dashboard button {
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loading {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+.loading::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid black;
+  animation: prixClipFix 2s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
+.error {
+  margin: 20px 0;
+  font-size: 18px;
+  color: #d9534f; /* Error color */
+}
+.dashboard span {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.dashboard button:first-child {
+  color: red;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.dashboard button:last-child {
   border: none;
   border-radius: 25px;
-  background-color: #5cb85c;
+  background-color: #3c58fa;
   padding: 10px 20px;
   font-size: 16px;
   margin: 1rem;
@@ -80,38 +153,43 @@ input {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
+
 .dashboard button:hover {
   transform: scale(1.1);
 }
 
 .search-bar {
-  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  margin-bottom: 2rem;
 }
 
-.search-bar input {
-  border-radius: 25px;
-  width: 50%;
-  margin: 1rem;
-  padding: 10px;
-  font-size: 16px;
+.input-container {
+  position: relative;
+  width: 100%;
 }
 
-.search-bar .search-button {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 16px;
+.search-input {
+  width: 100%;
+}
+.input-container input {
+  font-size: 1.3rem;
 }
 .search-button {
+  position: absolute;
+  right: 15px;
+  top: 35%;
+  background: none;
+  border: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.search-button:hover {
+  transform: scale(1.1);
 }
 
-.loading,
-.error {
-  margin: 20px 0;
-  font-size: 18px;
-  color: #d9534f; /* Error color */
-}
+/* MAIN PAGE */
 
 .book-list {
   display: flex;
@@ -122,6 +200,7 @@ input {
 }
 
 .book-item {
+  background-color: white;
   width: 95%;
   border-radius: 15px;
   padding: 20px;
@@ -144,283 +223,24 @@ input {
 }
 
 .book-details h3 {
-  font-size: 1.5rem;
-}
-
-.book-details p {
-  margin: 1rem 0;
-}
-
-.book-details button {
-  padding: 10px 20px;
-  background-color: #5cb85c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transition: transform 0.3s ease;
-}
-
-.book-details button:hover {
-  transform: scale(1.1);
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  position: relative; /* Fix the pagination at the bottom */
-  bottom: 5px; /* Distance from the bottom */
-  width: 100%; /* Full width */
-  padding: 10px 0; /* Optional: Add padding for better look */
-}
-
-.pagination button {
-  padding: 1rem;
-  background-color: #5cb85c; /* Button color */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  margin: 0 10px;
-  width: 3rem; /* Set a fixed width */
-  height: 3rem; /* Set a fixed height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem; /* Adjust font size as needed */
-}
-
-.pagination button:disabled {
-  background-color: #ccc; /* Disabled button color */
-  cursor: not-allowed;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: #4cae4c;
-}
-
-/* MY BOOK LIST */
-.my-title {
-  text-align: center;
-  font-size: 3rem;
-}
-.my-book-detail {
-  flex: 1;
-  position: relative;
-  padding: 1rem;
-  width: 95%;
-  overflow: none;
-}
-
-.my-book-detail h3 {
   text-decoration: underline;
   font-size: 1.7rem;
   margin-bottom: 10px;
 }
 
-.my-book-detail p {
-  margin: 1rem 0;
-}
-.my-book-detail span {
-  font-weight: 600;
-  font-size: 1.2rem;
-}
-.my-book-detail .remove {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  color: #d9534f;
-  border: none;
-  cursor: pointer;
-}
-
-.my-book-detail .add-review {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background-color: transparent;
-  color: #5cb85c;
-  border: none;
-  cursor: pointer;
-}
-
-.my-book-detail .edit {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin: 0 15px;
-}
-
-.my-book-detail .delete {
-  background-color: transparent;
-  color: #d9534f;
-  border: none;
-  cursor: pointer;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-/* LOGIN - REGISTER */
-.title {
-  font-weight: 800;
-  font-size: 7rem;
-  text-align: center;
-}
-
-.title span {
-  color: black;
-  font-style: italic;
-  font-size: 6rem;
-}
-
-.login {
-  text-align: center;
-}
-
-.login h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-input {
-  width: 100%;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  padding: 15px;
-}
-.login button {
-  border: none;
-  border-radius: 25px;
-  background-color: #5cb85c;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 1rem;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.login button:hover {
-  transform: scale(1.1);
-}
-
-/* MEDIA QUERIES - LOGIN*/
-
-@media (max-width: 768px) {
-  .title {
-    font-size: 5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 2rem;
-  }
-  .login h2 {
-    font-size: 1.5rem;
-  }
-}
-/* MAIN PAGE */
-.dashboard button {
-  border: none;
-  border-radius: 25px;
-  background-color: #5cb85c;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 1rem;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.dashboard button:hover {
-  transform: scale(1.1);
-}
-
-.search-bar {
-  margin-bottom: 20px;
-}
-
-.search-bar input {
-  border-radius: 25px;
-  width: 50%;
-  margin: 1rem;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.search-bar .search-button {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 16px;
-}
-.search-button {
-  cursor: pointer;
-}
-
-.loading,
-.error {
-  margin: 20px 0;
-  font-size: 18px;
-  color: #d9534f; /* Error color */
-}
-
-.book-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  list-style: none;
-  align-items: center;
-}
-
-.book-item {
-  width: 95%;
-  border-radius: 15px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  display: flex;
-  position: relative;
-}
-
-.book-item img {
-  border-radius: 5px;
-  width: 200px;
-  height: 300px;
-}
-
-.book-details {
-  padding: 2rem;
-  width: 100%;
-  position: relative;
-}
-
-.book-details h3 {
-  font-size: 1.5rem;
-}
-
 .book-details p {
   margin: 1rem 0;
+}
+.book-details span {
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .book-details button {
   padding: 10px 20px;
-  background-color: #5cb85c;
-  color: white;
+  color: #5cb85c;
+  background-color: transparent;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   position: absolute;
   bottom: 0;
@@ -433,42 +253,34 @@ input {
 }
 
 .pagination {
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative; /* Fix the pagination at the bottom */
-  bottom: 5px; /* Distance from the bottom */
+  bottom: 15px; /* Distance from the bottom */
   width: 100%; /* Full width */
   padding: 10px 0; /* Optional: Add padding for better look */
 }
-
+.pagination span {
+  padding: 0 1rem;
+}
 .pagination button {
-  padding: 1rem;
-  background-color: #5cb85c; /* Button color */
   color: white;
   border: none;
-  border-radius: 50%;
   cursor: pointer;
-  margin: 0 10px;
-  width: 3rem; /* Set a fixed width */
-  height: 3rem; /* Set a fixed height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem; /* Adjust font size as needed */
+  background-color: transparent;
   transition: transform 0.3s ease;
-}
-.pagination button:hover {
-  transform: scale(1.1);
+  font-size: 3rem; /* Adjust font size as needed */
 }
 
 .pagination button:disabled {
-  background-color: #ccc; /* Disabled button color */
+  color: #797979;
   cursor: not-allowed;
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: #4cae4c;
+  transform: scale(1.2);
 }
 
 /* MY BOOK LIST */
@@ -501,7 +313,7 @@ input {
 .my-book-detail .remove {
   position: absolute;
   top: 10px;
-  right: 0;
+  right: 0px;
   background-color: transparent;
   color: #d9534f;
   border: none;
@@ -511,7 +323,7 @@ input {
 .my-book-detail .add-review {
   position: absolute;
   bottom: 10px;
-  right: 0;
+  right: 0px;
   background-color: transparent;
   color: #5cb85c;
   border: none;
@@ -531,6 +343,8 @@ input {
   border: none;
   cursor: pointer;
 }
+
+/* REVIEW */
 
 .review-list {
   padding-left: 20px;
@@ -553,30 +367,7 @@ input {
 .add-review:hover {
   transform: scale(1.2);
 }
-/* EDIT REVIEW */
-.edit-review textarea {
-  width: 80%;
-  height: 100px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  resize: none;
-}
 
-.edit,
-.delete,
-.remove,
-.add-review {
-  transition: transform 0.3s ease;
-}
-
-.edit:hover,
-.delete:hover,
-.remove:hover,
-.add-review:hover {
-  transform: scale(1.2);
-}
-/* EDIT REVIEW */
 .edit-review form {
   display: flex;
   flex-direction: column;

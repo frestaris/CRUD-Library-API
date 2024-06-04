@@ -59,34 +59,54 @@ const SearchBooks = ({ onAddBook }) => {
     <div className="navbar">
       <div className="search-bar">
         <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search for books..."
-          />
-          <button type="submit" className="search-button">
-            Search
-          </button>
+          <div className="input-container">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for books..."
+            />
+            <button type="submit" className="search-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                className="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+            </button>
+          </div>
         </form>
       </div>
-
-      {loading && <p className="loading">Loading...</p>}
-      {error && <p className="error">Error: {error.message}</p>}
+      <div className="loading-container">
+        {loading && <span className="loading"></span>}
+        {error && <p className="error">Error: {error.message}</p>}
+      </div>
       <ul className="book-list">
         {currentResults.map((book) => (
           <li className="book-item" key={book.key}>
             <img
-              src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+              src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
               alt={book.title}
             />
             <div className="book-details">
               <h3>{book.title}</h3>
               <p>
-                Author:{" "}
+                <span>Author:</span>{" "}
                 {book.author_name ? book.author_name.join(", ") : "Unknown"}
               </p>
-              <p>First Published: {book.first_publish_year}</p>
+              <p>
+                <span>First Published:</span> {book.first_publish_year}
+              </p>
+              <p>
+                <span>Rating:</span> {Number(book.ratings_average).toFixed(1)}
+              </p>
+              <p>
+                <span>Pages:</span> {book.number_of_pages_median}
+              </p>
               <button
                 onClick={() =>
                   onAddBook({
@@ -100,7 +120,19 @@ const SearchBooks = ({ onAddBook }) => {
                   })
                 }
               >
-                Add
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  className="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                  />
+                </svg>
               </button>
             </div>
           </li>
