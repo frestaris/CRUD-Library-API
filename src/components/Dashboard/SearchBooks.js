@@ -7,6 +7,42 @@ const SearchBooks = ({ onAddBook }) => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
+  const [selectedGenre, setSelectedGenre] = useState("All");
+
+  const genres = [
+    "All",
+    "Fiction",
+    "Non-Fiction",
+    "Fantasy",
+    "Science Fiction",
+    "Mystery",
+    "Romance",
+  ];
+  console.log("Query:", query);
+  console.log("Selected Genre:", selectedGenre);
+  console.log("Current Page:", currentPage);
+
+  const fetchBooks = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const genreQuery =
+        selectedGenre === "All" ? "" : `&subject=${selectedGenre}`;
+      const response = await fetch(
+        `https://openlibrary.org/search.json?q=${query}${genreQuery}&page=${currentPage}&limit=20`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setResults(data.docs);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -56,7 +92,7 @@ const SearchBooks = ({ onAddBook }) => {
   };
 
   return (
-    <div className="navbar">
+    <div className="main-page">
       <div className="search-bar">
         <form onSubmit={handleSearch}>
           <div className="input-container">
@@ -66,6 +102,7 @@ const SearchBooks = ({ onAddBook }) => {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for books..."
             />
+
             <button type="submit" className="search-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +117,23 @@ const SearchBooks = ({ onAddBook }) => {
             </button>
           </div>
         </form>
+        <select
+          className="dropdown"
+          value={selectedGenre}
+          onChange={(e) => {
+            setSelectedGenre(e.target.value);
+            setCurrentPage(1);
+            fetchBooks(); // Fetch books whenever genre changes
+          }}
+        >
+          {genres.map((genre) => (
+            <option className="prova" key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
       </div>
+
       <div className="loading-container">
         {loading && <span className="loading"></span>}
         {error && <p className="error">Error: {error.message}</p>}
